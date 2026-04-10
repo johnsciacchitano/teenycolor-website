@@ -1,1 +1,1310 @@
-<!-- TeenyColor website -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>teenycolor - Color Picker For Your Mac</title>
+    <meta name="description" content="A lightweight macOS menu bar color picker. Pick any color from your screen, auto-copy in 9 formats, keep a history of picks, and check WCAG contrast. $4.99 lifetime license.">
+    <meta property="og:title" content="teenycolor - Color Picker For Your Mac">
+    <meta property="og:description" content="A lightweight macOS menu bar color picker. Pick any color from your screen, auto-copy in 9 formats, keep a history of picks, and check WCAG contrast. $4.99 lifetime license.">
+    <meta property="og:image" content="https://teenycolor.com/images/og-image.png">
+    <meta property="og:url" content="https://teenycolor.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'Fraunces';
+            src: url('fonts/Fraunces_72pt-Bold.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        :root {
+            --orange: #FF6B35;
+            --orange-hover: #E85A24;
+            --orange-light: #FFF3EE;
+            --orange-glow: rgba(255, 107, 53, 0.15);
+            --text-primary: #1A1A2E;
+            --text-secondary: #5A5A72;
+            --text-muted: #8E8EA0;
+            --bg-white: #FFFFFF;
+            --bg-cream: #FAFAF8;
+            --bg-light: #F5F5F3;
+            --border: #E8E8E4;
+            --border-light: #F0F0EC;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06), 0 2px 4px rgba(0,0,0,0.04);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+            --shadow-xl: 0 20px 60px rgba(0,0,0,0.10), 0 8px 20px rgba(0,0,0,0.06);
+            --shadow-screenshot: 0 16px 48px rgba(0,0,0,0.12), 0 6px 16px rgba(0,0,0,0.06);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --max-width: 1200px;
+            --font-display: 'DM Serif Display', serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-white);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .brand-name {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border-light);
+            transition: box-shadow 0.3s ease;
+        }
+
+        nav.scrolled {
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 40px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .nav-brand img {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+        }
+
+        .nav-brand .brand-name {
+            font-size: 20px;
+        }
+
+        .nav-links { display: flex; gap: 10px; align-items: center; }
+
+        /* ── BUTTONS ── */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: var(--radius-sm);
+            text-decoration: none;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            line-height: 1.4;
+        }
+
+        .btn-primary {
+            background: var(--orange);
+            color: #fff;
+            box-shadow: 0 2px 8px var(--orange-glow);
+        }
+        .btn-primary:hover {
+            background: var(--orange-hover);
+            box-shadow: 0 4px 16px rgba(255, 107, 53, 0.35);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1.5px solid var(--border);
+        }
+        .btn-outline:hover {
+            border-color: var(--orange);
+            color: var(--orange);
+            background: var(--orange-light);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--orange);
+            padding: 8px 16px;
+        }
+        .btn-ghost:hover {
+            text-decoration: underline;
+        }
+
+        .btn-large {
+            padding: 14px 32px;
+            font-size: 16px;
+            border-radius: var(--radius-md);
+        }
+
+        /* ── HERO ── */
+        .hero {
+            padding: 140px 40px 80px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -60%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255,107,53,0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 720px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(42px, 6vw, 64px);
+            line-height: 1.1;
+            margin-bottom: 16px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--text-primary);
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--orange);
+        }
+
+        .hero-sub {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .hero-body {
+            font-size: 17px;
+            color: var(--text-muted);
+            max-width: 540px;
+            margin: 0 auto 36px;
+            line-height: 1.7;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 64px;
+        }
+
+        .hero-media {
+            max-width: 640px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-media img {
+            width: 100%;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-screenshot);
+        }
+
+        /* ── SECTION UTILITIES ── */
+        .section-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 580px;
+            margin: 0 auto 56px;
+        }
+
+        .section-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(30px, 4vw, 42px);
+            font-weight: 700;
+            margin-bottom: 14px;
+            line-height: 1.15;
+            color: var(--text-primary);
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+            font-size: 17px;
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* ── CATEGORY GRID (Color Formats) ── */
+        .formats-section {
+            padding: 90px 40px;
+            background: var(--bg-cream);
+        }
+
+        .formats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .format-card {
+            text-align: center;
+            padding: 28px 20px;
+        }
+
+        .format-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: var(--orange-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+        }
+
+        .format-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke: var(--orange);
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .format-card h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .format-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ── ALTERNATING SHOWCASE ── */
+        .showcase-section {
+            padding: 100px 40px;
+            background: var(--bg-white);
+        }
+
+        .showcase-row {
+            display: flex;
+            align-items: center;
+            gap: 64px;
+            margin-bottom: 100px;
+        }
+
+        .showcase-row:last-child { margin-bottom: 0; }
+        .showcase-row.reverse { flex-direction: row-reverse; }
+
+        .showcase-text {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .showcase-text h3 {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .showcase-text p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.65;
+        }
+
+        .showcase-image {
+            flex: 1.2;
+            min-width: 300px;
+        }
+
+        .showcase-image img {
+            width: 100%;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ── FEATURE CARD GRID ── */
+        .features-section {
+            padding: 90px 40px;
+            background: var(--bg-cream);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--bg-white);
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            padding: 28px;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--text-muted);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            font-size: 28px;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--text-primary);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.55;
+        }
+
+        /* ── MAC WINDOW FRAME ── */
+        .window-section {
+            padding: 90px 40px;
+            background: var(--bg-white);
+        }
+
+        .mac-window {
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+        }
+
+        .mac-titlebar {
+            background: #2A2A2A;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mac-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .mac-dot.red { background: #FF5F57; }
+        .mac-dot.yellow { background: #FEBC2E; }
+        .mac-dot.green { background: #28C840; }
+
+        .mac-window-body {
+            background: #1E1E1E;
+        }
+
+        .mac-window-body img {
+            width: 100%;
+            display: block;
+        }
+
+        /* ── CTA BREAK ── */
+        .cta-break {
+            padding: 48px 40px;
+            text-align: center;
+            background: var(--bg-cream);
+        }
+
+        .cta-break .btn { margin: 0 6px; }
+
+        /* ── FAQ ── */
+        .faq-section {
+            padding: 100px 40px;
+            background: var(--bg-white);
+        }
+
+        .faq-list {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-item:first-child {
+            border-top: 1px solid var(--border);
+        }
+
+        .faq-question {
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            color: var(--text-primary);
+            padding: 18px 0;
+            background: none;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-family: var(--font-body);
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 20px;
+            color: var(--text-muted);
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+            margin-left: 16px;
+        }
+
+        .faq-item.open .faq-question::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.65;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 250px;
+            padding-bottom: 18px;
+        }
+
+        .faq-answer a {
+            color: var(--orange);
+            text-decoration: none;
+        }
+
+        .faq-answer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ── PRICING ── */
+        .pricing-section {
+            padding: 100px 40px;
+            text-align: center;
+            background: var(--bg-cream);
+        }
+
+        .pricing-card {
+            max-width: 400px;
+            margin: 0 auto;
+            background: var(--bg-white);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 48px 40px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20%;
+            right: 20%;
+            height: 3px;
+            background: var(--orange);
+            border-radius: 0 0 3px 3px;
+        }
+
+        .pricing-card .icon-wrap {
+            margin-bottom: 18px;
+        }
+
+        .pricing-card .icon-wrap img {
+            width: 56px; height: 56px;
+            border-radius: 13px;
+        }
+
+        .pricing-label {
+            font-weight: 700;
+            font-size: 17px;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .pricing-amount {
+            font-family: var(--font-display);
+            font-size: 52px;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .pricing-note {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: 28px;
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+            justify-content: center;
+            font-size: 16px;
+            padding: 14px 32px;
+            border-radius: var(--radius-md);
+            margin-bottom: 10px;
+        }
+
+        .pricing-card .btn:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .pricing-trial {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-top: 14px;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 32px 40px;
+            background: var(--bg-white);
+        }
+
+        .footer-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+        }
+
+        .footer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .footer-row .brand-name {
+            font-size: 16px;
+            color: var(--text-primary);
+        }
+
+        .footer-row .made-for-mac {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .footer-row .footer-contact {
+            font-size: 14px;
+            color: var(--text-muted);
+            display: flex;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .footer-contact a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+
+        .footer-contact a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-links {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            margin: 0 8px;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .footer-links .sep {
+            color: var(--border);
+        }
+
+        .footer-copyright {
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        /* ── DOWNLOAD MODAL ── */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-box {
+            background: var(--bg-white);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            padding: 48px 40px;
+            max-width: 440px;
+            width: 90%;
+            position: relative;
+            transform: translateY(16px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg-light);
+            color: var(--text-muted);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--border);
+        }
+
+        .modal-box h3 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .modal-box .modal-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        .modal-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-form input[type="email"] {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s ease;
+        }
+
+        .modal-form input[type="email"]:focus {
+            border-color: var(--orange);
+        }
+
+        .modal-form button {
+            padding: 12px 24px;
+            background: var(--orange);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .modal-form button:hover {
+            background: var(--orange-hover);
+        }
+
+        .modal-success {
+            display: none;
+            text-align: center;
+            padding: 12px 0;
+        }
+
+        .modal-success.show {
+            display: block;
+        }
+
+        .modal-success .checkmark {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #E8F5EC;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 14px;
+            font-size: 24px;
+        }
+
+        .modal-success p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .modal-success p strong {
+            color: var(--text-primary);
+        }
+
+        /* ── FADE-UP ANIMATIONS ── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── RESPONSIVE 900px ── */
+        @media (max-width: 900px) {
+            .nav-inner { padding: 0 24px; }
+            .hero { padding: 120px 24px 60px; }
+            .formats-grid { grid-template-columns: repeat(2, 1fr); }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .showcase-row,
+            .showcase-row.reverse {
+                flex-direction: column;
+                gap: 36px;
+            }
+            .showcase-section,
+            .formats-section,
+            .features-section,
+            .faq-section,
+            .pricing-section,
+            .window-section,
+            .cta-break { padding-left: 24px; padding-right: 24px; }
+            footer { padding-left: 24px; padding-right: 24px; }
+        }
+
+        /* ── RESPONSIVE 640px ── */
+        @media (max-width: 640px) {
+            .nav-links .btn-outline { display: none; }
+            .nav-links .btn { font-size: 13px; padding: 8px 14px; }
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-buttons .btn {
+                max-width: 300px;
+                width: 100%;
+            }
+            .formats-grid { grid-template-columns: repeat(2, 1fr); }
+            .features-grid { grid-template-columns: 1fr; }
+            .footer-row {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+            .footer-row .footer-contact {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .modal-form {
+                flex-direction: column;
+            }
+            .cta-break .btn {
+                display: block;
+                margin: 0 auto 10px;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="nav-brand">
+                <img src="images/app-icon.png" alt="teenycolor icon">
+                <span class="brand-name">teenycolor</span>
+            </a>
+            <div class="nav-links">
+                <a href="#" class="btn btn-outline download-trigger">Download App</a>
+                <!-- TODO: Replace with Polar checkout URL -->
+                <a href="#" class="btn btn-primary">Purchase License: $4.99</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Pick Any Color <em>From Your Mac</em></h1>
+            <p class="hero-sub">One click to grab. Instantly copied. Always remembered.</p>
+            <p class="hero-body">
+                <span class="brand-name">teenycolor</span> lives in your menu bar and lets you pick any color from anywhere on screen. It auto-copies the value in your preferred format &mdash; Hex, RGB, HSL, SwiftUI, and more &mdash; and keeps a history of every color you pick. 3-day free trial, then $4.99 once.
+            </p>
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-outline btn-large download-trigger">Download App</a>
+                <!-- TODO: Replace with Polar checkout URL -->
+                <a href="#" class="btn btn-primary btn-large">Purchase License: $4.99</a>
+            </div>
+            <div class="hero-media fade-up">
+                <img src="images/screenshot-hero.webp" alt="teenycolor popover showing color history with picked colors, hex values, and pinned palettes">
+            </div>
+        </div>
+    </section>
+
+    <!-- COLOR FORMATS -->
+    <section class="formats-section">
+        <div class="section-inner">
+            <div class="section-header fade-up">
+                <h2>Nine formats. One click.</h2>
+                <p>Pick a color and <span class="brand-name">teenycolor</span> copies it in the format you need. Switch formats anytime.</p>
+            </div>
+            <div class="formats-grid fade-up">
+                <div class="format-card">
+                    <div class="format-icon">
+                        <svg viewBox="0 0 24 24"><path d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/></svg>
+                    </div>
+                    <h3>Hex</h3>
+                    <p>#FF6B35 &mdash; the web standard for quick color codes.</p>
+                </div>
+                <div class="format-card">
+                    <div class="format-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    </div>
+                    <h3>RGB</h3>
+                    <p>rgb(255, 107, 53) &mdash; for CSS, design tools, and specs.</p>
+                </div>
+                <div class="format-card">
+                    <div class="format-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/><path d="M2 12h20"/></svg>
+                    </div>
+                    <h3>HSL</h3>
+                    <p>hsl(16, 100%, 60%) &mdash; intuitive hue-based color values.</p>
+                </div>
+                <div class="format-card">
+                    <div class="format-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                    </div>
+                    <h3>HSB</h3>
+                    <p>hsb(16, 79%, 100%) &mdash; brightness-first for designers.</p>
+                </div>
+                <div class="format-card">
+                    <div class="format-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    </div>
+                    <h3>SwiftUI</h3>
+                    <p>Color(red: 1.0, green: 0.42, blue: 0.21) &mdash; native Swift.</p>
+                </div>
+                <div class="format-card">
+                    <div class="format-icon">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <h3>UIColor</h3>
+                    <p>UIColor(red: 1.0, green: 0.42, blue: 0.21, alpha: 1.0)</p>
+                </div>
+                <div class="format-card">
+                    <div class="format-icon">
+                        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+                    </div>
+                    <h3>CSS</h3>
+                    <p>All CSS-ready values &mdash; hex, rgb(), hsl() for stylesheets.</p>
+                </div>
+                <div class="format-card">
+                    <div class="format-icon">
+                        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                    </div>
+                    <h3>Named Colors</h3>
+                    <p>Give any color a custom name for your own reference.</p>
+                </div>
+                <div class="format-card">
+                    <div class="format-icon">
+                        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    </div>
+                    <h3>Export</h3>
+                    <p>Export palettes as plain text or JSON for sharing with your team.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SHOWCASE: PICKER, HISTORY, CONTRAST -->
+    <section class="showcase-section">
+        <div class="section-inner">
+            <div class="showcase-row fade-up">
+                <div class="showcase-text">
+                    <h3>Pick colors with a native loupe.</h3>
+                    <p><span class="brand-name">teenycolor</span> uses macOS native NSColorSampler to give you a pixel-perfect magnifying loupe. Click anywhere on screen to grab the exact color under your cursor. The value is copied to your clipboard instantly.</p>
+                </div>
+                <div class="showcase-image">
+                    <img src="images/screenshot-picker.webp" alt="teenycolor native color picker loupe sampling a color from the screen">
+                </div>
+            </div>
+
+            <div class="showcase-row reverse fade-up">
+                <div class="showcase-text">
+                    <h3>Every color you pick, remembered.</h3>
+                    <p><span class="brand-name">teenycolor</span> keeps a history of your last 50 picked colors. Each one shows the color swatch, hex value, and the format you copied. Pin your most-used colors so they stay at the top.</p>
+                </div>
+                <div class="showcase-image">
+                    <img src="images/screenshot-history.webp" alt="teenycolor color history list showing recent picks with swatches and hex values">
+                </div>
+            </div>
+
+            <div class="showcase-row fade-up">
+                <div class="showcase-text">
+                    <h3>Check contrast at a glance.</h3>
+                    <p>See the WCAG contrast ratio between any two colors in your history. <span class="brand-name">teenycolor</span> tells you whether your color pair passes AA or AAA standards &mdash; no need to open a separate accessibility tool.</p>
+                </div>
+                <div class="showcase-image">
+                    <img src="images/screenshot-contrast.webp" alt="teenycolor WCAG contrast ratio checker showing pass and fail results for two colors">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA BREAK -->
+    <section class="cta-break">
+        <a href="#" class="btn btn-outline download-trigger">Download App</a>
+        <!-- TODO: Replace with Polar checkout URL -->
+        <a href="#" class="btn btn-primary">Purchase License: $4.99</a>
+    </section>
+
+    <!-- MAC WINDOW: APP -->
+    <section class="window-section">
+        <div class="section-inner">
+            <div class="section-header fade-up">
+                <h2>A color picker that lives in your menu bar.</h2>
+                <p>Always one click or keyboard shortcut away. The menu bar dot even changes to your last picked color.</p>
+            </div>
+            <div class="mac-window fade-up">
+                <div class="mac-titlebar">
+                    <div class="mac-dot red"></div>
+                    <div class="mac-dot yellow"></div>
+                    <div class="mac-dot green"></div>
+                </div>
+                <div class="mac-window-body">
+                    <img src="images/screenshot-app.webp" alt="teenycolor full popover with color history, pinned colors, and format selector">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES GRID -->
+    <section class="features-section">
+        <div class="section-inner">
+            <div class="section-header fade-up">
+                <h2>Small app. Serious colors.</h2>
+                <p>Everything you need to pick, copy, and organize colors on your Mac.</p>
+            </div>
+            <div class="features-grid fade-up">
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F50D;</span>
+                    <h3>Native Loupe Picker</h3>
+                    <p>Pixel-perfect color sampling using macOS native NSColorSampler with a magnifying loupe.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F4CB;</span>
+                    <h3>Auto-Copy to Clipboard</h3>
+                    <p>The moment you pick a color, the value is copied in your preferred format. No extra step.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F3A8;</span>
+                    <h3>9 Color Formats</h3>
+                    <p>Hex, RGB, HSL, HSB, SwiftUI, UIColor, CSS, named colors, and palette export.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F4CC;</span>
+                    <h3>Pinned Colors</h3>
+                    <p>Pin frequently used colors. They stay at the top of your list and are never auto-deleted.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F4D6;</span>
+                    <h3>Color History</h3>
+                    <p>Your last 50 picked colors, always accessible. Scroll, search, and re-copy any of them.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x2699;</span>
+                    <h3>WCAG Contrast Checker</h3>
+                    <p>Check contrast ratios between any two colors. See AA and AAA pass/fail at a glance.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x2328;</span>
+                    <h3>Global Hotkeys</h3>
+                    <p>Option-Shift-C to pick a color, Option-Shift-X to open the popover. Works from any app.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F3F7;</span>
+                    <h3>Color Naming</h3>
+                    <p>Give any color a custom name. Rename anytime to keep your palette organized.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F680;</span>
+                    <h3>Menu Bar Dot</h3>
+                    <p>The menu bar icon shows a colored dot that matches your most recently picked color.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+        <div class="section-inner">
+            <div class="section-header fade-up">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            <div class="faq-list fade-up">
+                <div class="faq-item">
+                    <button class="faq-question">How much does it cost?</button>
+                    <div class="faq-answer">$4.99 as a one-time payment. That's it. No subscription, no recurring charges, ever. All future updates are included.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Is this a subscription?</button>
+                    <div class="faq-answer">No. You pay once and own <span class="brand-name">teenycolor</span> forever. There is no subscription and there never will be.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Is there a free trial?</button>
+                    <div class="faq-answer">Yes. <span class="brand-name">teenycolor</span> comes with a 3-day free trial with full access to every feature. No credit card required.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">What macOS version do I need?</button>
+                    <div class="faq-answer">macOS 14 Sonoma or later.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Does it need an internet connection?</button>
+                    <div class="faq-answer">Only for a one-time license activation. All color picking and data stays on your Mac. <span class="brand-name">teenycolor</span> works fully offline after that.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Is my color data private?</button>
+                    <div class="faq-answer">Completely. Everything is stored locally on your Mac. Nothing is sent anywhere &mdash; no analytics, no telemetry, no cloud sync. Your color history never leaves your machine.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">How many colors does it remember?</button>
+                    <div class="faq-answer"><span class="brand-name">teenycolor</span> keeps a history of your last 50 picked colors. Pinned colors are never auto-deleted and don't count toward the limit.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">How do I report a bug?</button>
+                    <div class="faq-answer">Email <a href="mailto:contact@teenyapps.com">contact@teenyapps.com</a> and I'll respond within 1 business day.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">Can I request a feature?</button>
+                    <div class="faq-answer">Yes! Email <a href="mailto:contact@teenyapps.com">contact@teenyapps.com</a> or use the feedback form linked in the app's settings.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="pricing-section" id="download">
+        <div class="section-inner">
+            <div class="section-header fade-up">
+                <h2>One price. Forever.</h2>
+            </div>
+            <div class="pricing-card fade-up">
+                <div class="icon-wrap">
+                    <img src="images/app-icon.png" alt="teenycolor icon">
+                </div>
+                <div class="pricing-label">Lifetime License</div>
+                <div class="pricing-amount">$4.99</div>
+                <div class="pricing-note">One-time payment. No subscription. Ever.</div>
+                <!-- TODO: Replace with Polar checkout URL -->
+                <a href="#" class="btn btn-primary">Purchase License: $4.99</a>
+                <a href="#" class="btn btn-outline download-trigger">Download App</a>
+                <p class="pricing-trial">3-day free trial. No credit card required.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-row">
+                <span class="brand-name">teenycolor</span>
+                <span class="made-for-mac">Made for Mac</span>
+                <div class="footer-contact">
+                    <a href="mailto:contact@teenyapps.com">contact@teenyapps.com</a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <span class="sep">|</span>
+                <a href="terms.html">Terms and Conditions</a>
+            </div>
+            <div class="footer-copyright">&copy; 2026 teenycolor. All rights reserved.</div>
+        </div>
+    </footer>
+
+    <!-- DOWNLOAD MODAL -->
+    <div class="modal-overlay" id="downloadModal">
+        <div class="modal-box">
+            <button class="modal-close">&times;</button>
+            <div class="modal-content">
+                <h3>Coming Soon</h3>
+                <p class="modal-desc"><span class="brand-name">teenycolor</span> is almost ready. Leave your email and we'll let you know the moment it's available for download.</p>
+                <div class="modal-form">
+                    <input type="email" id="modalEmail" placeholder="you@email.com" autocomplete="email">
+                    <button type="button" id="modalSubmit">Notify Me</button>
+                </div>
+            </div>
+            <div class="modal-success">
+                <div class="checkmark">&#x2714;</div>
+                <p><strong>You're on the list.</strong><br>We'll email you as soon as <span class="brand-name">teenycolor</span> is ready to download.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ── Nav scroll shadow ──
+        const nav = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 10);
+        });
+
+        // ── FAQ toggle ──
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                q.parentElement.classList.toggle('open');
+            });
+        });
+
+        // ── Download modal ──
+        const modal = document.getElementById('downloadModal');
+        const modalContent = modal.querySelector('.modal-content');
+        const modalSuccess = modal.querySelector('.modal-success');
+        const modalEmail = document.getElementById('modalEmail');
+        const modalSubmit = document.getElementById('modalSubmit');
+
+        function openModal() {
+            modal.classList.add('active');
+            modalContent.style.display = 'block';
+            modalSuccess.classList.remove('show');
+            modalEmail.value = '';
+            setTimeout(() => modalEmail.focus(), 100);
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        document.querySelectorAll('.download-trigger').forEach(trigger => {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal();
+            });
+        });
+
+        modal.querySelector('.modal-close').addEventListener('click', closeModal);
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        modalSubmit.addEventListener('click', () => {
+            const email = modalEmail.value.trim();
+            if (email && email.includes('@')) {
+                modalContent.style.display = 'none';
+                modalSuccess.classList.add('show');
+            }
+        });
+
+        modalEmail.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') modalSubmit.click();
+        });
+
+        // ── Fade-up animations ──
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
