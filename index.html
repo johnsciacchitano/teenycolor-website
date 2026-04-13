@@ -985,22 +985,22 @@
                     <div class="format-icon">
                         <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
                     </div>
-                    <h3>CSS</h3>
-                    <p>All CSS-ready values  - hex, rgb(), hsl() for stylesheets.</p>
+                    <h3>CSS rgba</h3>
+                    <p>rgba(255, 107, 53, 1.0). Ready to paste into stylesheets.</p>
                 </div>
                 <div class="format-card">
                     <div class="format-icon">
-                        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                        <svg viewBox="0 0 24 24"><path d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/></svg>
                     </div>
-                    <h3>Named Colors</h3>
-                    <p>Give any color a custom name for your own reference.</p>
+                    <h3>Hex (lowercase)</h3>
+                    <p>#ff6b35. Lowercase hex for workflows that prefer it.</p>
                 </div>
                 <div class="format-card">
                     <div class="format-icon">
-                        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
                     </div>
-                    <h3>Export</h3>
-                    <p>Export palettes as plain text or JSON for sharing with your team.</p>
+                    <h3>RGB Decimal</h3>
+                    <p>255, 107, 53. Just the numbers, no wrapper function.</p>
                 </div>
             </div>
         </div>
@@ -1012,7 +1012,7 @@
             <div class="showcase-row fade-up">
                 <div class="showcase-text">
                     <h3>Pick colors with a native loupe.</h3>
-                    <p><span class="brand-name">teenycolor</span> uses macOS native NSColorSampler to give you a pixel-perfect magnifying loupe. Click anywhere on screen to grab the exact color under your cursor. The value is copied to your clipboard instantly.</p>
+                    <p><span class="brand-name">teenycolor</span> uses macOS native NSColorSampler to give you a pixel-perfect magnifying loupe. Click anywhere on any screen to grab the exact color under your cursor. The value is copied to your clipboard instantly and a floating HUD confirms the copy.</p>
                 </div>
                 <div class="showcase-image">
                     <img src="images/screenshot-picker.webp" alt="teenycolor native color picker loupe sampling a color from the screen">
@@ -1022,7 +1022,7 @@
             <div class="showcase-row reverse fade-up">
                 <div class="showcase-text">
                     <h3>Every color you pick, remembered.</h3>
-                    <p><span class="brand-name">teenycolor</span> keeps a history of your last 50 picked colors. Each one shows the color swatch, hex value, and the format you copied. Pin your most-used colors so they stay at the top.</p>
+                    <p><span class="brand-name">teenycolor</span> saves your picked colors automatically. Each entry shows a color swatch, the formatted value, and a relative timestamp. History persists between launches and the limit is configurable (20, 50, or 100). Pin your favorites so they stay at the top forever.</p>
                 </div>
                 <div class="showcase-image">
                     <img src="images/screenshot-history.webp" alt="teenycolor color history list showing recent picks with swatches and hex values">
@@ -1032,7 +1032,7 @@
             <div class="showcase-row fade-up">
                 <div class="showcase-text">
                     <h3>Check contrast at a glance.</h3>
-                    <p>See the WCAG contrast ratio between any two colors in your history. <span class="brand-name">teenycolor</span> tells you whether your color pair passes AA or AAA standards  - no need to open a separate accessibility tool.</p>
+                    <p>For every color you pick, <span class="brand-name">teenycolor</span> calculates the WCAG 2.1 contrast ratio against both white and black backgrounds. Color-coded badges show AAA, AA, AA Large, or Fail instantly. No need to open a separate accessibility tool.</p>
                 </div>
                 <div class="showcase-image">
                     <img src="images/screenshot-contrast.webp" alt="teenycolor WCAG contrast ratio checker showing pass and fail results for two colors">
@@ -1053,7 +1053,7 @@
         <div class="section-inner">
             <div class="section-header fade-up">
                 <h2>A color picker that lives in your menu bar.</h2>
-                <p>Always one click or keyboard shortcut away. The menu bar dot even changes to your last picked color.</p>
+                <p>No dock icon, no main window. Always one click or global hotkey away. Optionally show a colored dot for your last picked color.</p>
             </div>
             <div class="mac-window fade-up">
                 <div class="mac-titlebar">
@@ -1089,7 +1089,7 @@
                 <div class="feature-card">
                     <span class="feature-icon">&#x1F3A8;</span>
                     <h3>9 Color Formats</h3>
-                    <p>Hex, RGB, HSL, HSB, SwiftUI, UIColor, CSS, named colors, and palette export.</p>
+                    <p>Hex, Hex lowercase, RGB, RGB decimal, HSL, HSB, SwiftUI Color, UIColor, and CSS rgba.</p>
                 </div>
                 <div class="feature-card">
                     <span class="feature-icon">&#x1F4CC;</span>
@@ -1099,17 +1099,17 @@
                 <div class="feature-card">
                     <span class="feature-icon">&#x1F4D6;</span>
                     <h3>Color History</h3>
-                    <p>Your last 50 picked colors, always accessible. Scroll, search, and re-copy any of them.</p>
+                    <p>Your picked colors are saved automatically and persist between launches. Click any to re-copy it instantly.</p>
                 </div>
                 <div class="feature-card">
                     <span class="feature-icon">&#x2699;</span>
                     <h3>WCAG Contrast Checker</h3>
-                    <p>Check contrast ratios between any two colors. See AA and AAA pass/fail at a glance.</p>
+                    <p>Every color shows its WCAG 2.1 contrast ratio against white and black. See AAA, AA, AA Large, or Fail badges instantly.</p>
                 </div>
                 <div class="feature-card">
                     <span class="feature-icon">&#x2328;</span>
                     <h3>Global Hotkeys</h3>
-                    <p>Option-Shift-C to pick a color, Option-Shift-X to open the popover. Works from any app.</p>
+                    <p>Option-Shift-C to pick a color, Option-Shift-X to open the popover. Fully customizable. Works from any app.</p>
                 </div>
                 <div class="feature-card">
                     <span class="feature-icon">&#x1F3F7;</span>
@@ -1119,7 +1119,37 @@
                 <div class="feature-card">
                     <span class="feature-icon">&#x1F680;</span>
                     <h3>Menu Bar Dot</h3>
-                    <p>The menu bar icon shows a colored dot that matches your most recently picked color.</p>
+                    <p>Optionally show a colored dot next to the menu bar icon that reflects your last picked color.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F50E;</span>
+                    <h3>Color Detail Panel</h3>
+                    <p>Tap any color to see all nine format values with click-to-copy buttons, plus WCAG contrast ratios.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F4E4;</span>
+                    <h3>Palette Export</h3>
+                    <p>Export all colors or just pinned colors as plain text (.txt) or structured JSON (.json) files.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F5B1;</span>
+                    <h3>Right-Click Menu</h3>
+                    <p>Right-click any color for quick access to Copy, Pin/Unpin, Rename, and Delete actions.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x26A1;</span>
+                    <h3>Launch at Login</h3>
+                    <p>Starts automatically when your Mac boots. Ready the moment you need it, with no setup required.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F3AF;</span>
+                    <h3>sRGB Color Accuracy</h3>
+                    <p>Colors are converted to sRGB for consistent output, regardless of which display or color profile you sample from.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">&#x1F34E;</span>
+                    <h3>100% Native Mac</h3>
+                    <p>Built with Swift and SwiftUI. Zero third-party dependencies. No Electron, no web views. App Sandbox enabled.</p>
                 </div>
             </div>
         </div>
@@ -1146,7 +1176,7 @@
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">What macOS version do I need?</button>
-                    <div class="faq-answer">macOS 14 Sonoma or later.</div>
+                    <div class="faq-answer">macOS 14 Sonoma or later. <span class="brand-name">teenycolor</span> is a universal binary that runs natively on both Apple Silicon and Intel Macs.</div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">Does it need an internet connection?</button>
@@ -1158,7 +1188,7 @@
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">How many colors does it remember?</button>
-                    <div class="faq-answer"><span class="brand-name">teenycolor</span> keeps a history of your last 50 picked colors. Pinned colors are never auto-deleted and don't count toward the limit.</div>
+                    <div class="faq-answer"><span class="brand-name">teenycolor</span> keeps a history of your picked colors. The limit is configurable in Settings: choose 20, 50, or 100 unpinned colors. Pinned colors are never auto-deleted and don't count toward the limit.</div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-question">How do I report a bug?</button>
@@ -1207,6 +1237,8 @@
                 <a href="privacy.html">Privacy Policy</a>
                 <span class="sep">|</span>
                 <a href="terms.html">Terms and Conditions</a>
+                <span class="sep">|</span>
+                <a href="https://teenyapps.com">Explore all TeenyApps</a>
             </div>
             <div class="footer-copyright">&copy; 2026 teenycolor. All rights reserved.</div>
         </div>
