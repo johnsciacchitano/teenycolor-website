@@ -7,7 +7,7 @@
     <meta name="description" content="A lightweight macOS menu bar color picker. Pick any color from your screen, auto-copy in 9 formats, keep a history of picks, and check WCAG contrast. $4.99 lifetime license.">
     <meta property="og:title" content="teenycolor - Color Picker For Your Mac">
     <meta property="og:description" content="A lightweight macOS menu bar color picker. Pick any color from your screen, auto-copy in 9 formats, keep a history of picks, and check WCAG contrast. $4.99 lifetime license.">
-    <meta property="og:image" content="https://teenycolor.com/images/og-image.png">
+    <meta property="og:image" content="https://teenycolor.com/images/app-icon.png">
     <meta property="og:url" content="https://teenycolor.com">
     <meta name="twitter:card" content="summary_large_image">
     <meta property="og:type" content="website">
@@ -245,6 +245,106 @@
             box-shadow: var(--shadow-screenshot);
         }
 
+        .app-preview {
+            width: 100%;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-screenshot);
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .preview-toolbar {
+            height: 48px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 18px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-primary);
+        }
+
+        .preview-toolbar svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--orange);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .preview-toolbar strong {
+            font-size: 14px;
+            flex: 1;
+        }
+
+        .preview-count {
+            font-size: 12px;
+            color: var(--text-muted);
+            background: var(--bg-light);
+            border-radius: 999px;
+            padding: 3px 8px;
+        }
+
+        .preview-body {
+            padding: 16px 18px 18px;
+        }
+
+        .pick-button {
+            background: var(--orange);
+            color: white;
+            border-radius: 8px;
+            padding: 11px 14px;
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .preview-section-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            margin: 16px 0 8px;
+        }
+
+        .color-row {
+            display: grid;
+            grid-template-columns: 32px 1fr auto;
+            align-items: center;
+            gap: 12px;
+            min-height: 44px;
+            border-radius: 8px;
+        }
+
+        .swatch {
+            width: 28px;
+            height: 28px;
+            border-radius: 7px;
+            border: 1px solid rgba(0,0,0,0.12);
+        }
+
+        .color-value {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 13px;
+            color: var(--text-primary);
+        }
+
+        .color-name {
+            display: block;
+            font-family: var(--font-body);
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 1px;
+        }
+
+        .pin {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
         /* ── SECTION UTILITIES ── */
         .section-inner {
             max-width: var(--max-width);
@@ -372,6 +472,110 @@
             box-shadow: var(--shadow-lg);
         }
 
+        .picker-preview,
+        .contrast-preview {
+            width: 100%;
+            min-height: 320px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+        }
+
+        .picker-preview {
+            position: relative;
+            background:
+                linear-gradient(135deg, #FF6B35 0 24%, #1A1A2E 24% 46%, #FFFFFF 46% 64%, #5A5A72 64% 100%);
+        }
+
+        .loupe {
+            position: absolute;
+            width: 126px;
+            height: 126px;
+            border-radius: 50%;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle at 35% 35%, #FF8C61, #FF6B35 54%, #1A1A2E 55%);
+            border: 5px solid white;
+            box-shadow: 0 16px 36px rgba(0,0,0,0.22);
+        }
+
+        .loupe::before,
+        .loupe::after {
+            content: '';
+            position: absolute;
+            background: rgba(255,255,255,0.75);
+        }
+
+        .loupe::before {
+            left: 50%;
+            top: 8px;
+            width: 1px;
+            height: 110px;
+        }
+
+        .loupe::after {
+            top: 50%;
+            left: 8px;
+            height: 1px;
+            width: 110px;
+        }
+
+        .loupe-label {
+            position: absolute;
+            left: 50%;
+            bottom: 28px;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.78);
+            color: white;
+            border-radius: 999px;
+            padding: 9px 18px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .contrast-preview {
+            padding: 28px;
+        }
+
+        .contrast-swatch {
+            height: 120px;
+            border-radius: 16px;
+            background: #FF6B35;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+        }
+
+        .contrast-row {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 12px;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .contrast-ratio {
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+            color: var(--text-primary);
+        }
+
+        .contrast-level {
+            border-radius: 999px;
+            padding: 4px 9px;
+            color: white;
+            font-size: 11px;
+            font-weight: 800;
+            background: #34C759;
+        }
+
+        .contrast-level.warn {
+            background: var(--orange);
+        }
+
         /* ── FEATURE CARD GRID ── */
         .features-section {
             padding: 90px 40px;
@@ -450,11 +654,18 @@
 
         .mac-window-body {
             background: #1E1E1E;
+            padding: 28px;
         }
 
         .mac-window-body img {
             width: 100%;
             display: block;
+        }
+
+        .mac-window-body .app-preview {
+            max-width: 420px;
+            margin: 0 auto;
+            box-shadow: none;
         }
 
         /* ── CTA BREAK ── */
@@ -789,7 +1000,36 @@
                 <a href="https://buy.polar.sh/polar_cl_6o4mhi1rJ9arjSrFdRQvzKuHtyn9ieF1sVOUw2bzTip" class="btn btn-primary btn-large">Purchase License: $4.99</a>
             </div>
             <div class="hero-media fade-up">
-                <img src="images/screenshot-hero.webp" alt="teenycolor popover showing color history with picked colors, hex values, and pinned palettes">
+                <div class="app-preview" role="img" aria-label="teenycolor popover showing color history with picked colors, hex values, and pinned palettes">
+                    <div class="preview-toolbar">
+                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3.5l6 6-7.5 7.5H9v-4L16.5 5.5z"/><path d="M7 17l-3 3"/><path d="M12 8l4 4"/></svg>
+                        <strong>teenycolor</strong>
+                        <span class="preview-count">12</span>
+                    </div>
+                    <div class="preview-body">
+                        <div class="pick-button">Pick Color</div>
+                        <div class="preview-section-label">PINNED</div>
+                        <div class="color-row">
+                            <span class="swatch" style="background:#FF6B35"></span>
+                            <span><span class="color-name">Brand orange</span><span class="color-value">#FF6B35</span></span>
+                            <span class="pin">pin</span>
+                        </div>
+                        <div class="color-row">
+                            <span class="swatch" style="background:#1A1A2E"></span>
+                            <span><span class="color-name">Ink</span><span class="color-value">rgb(26, 26, 46)</span></span>
+                            <span class="pin">pin</span>
+                        </div>
+                        <div class="preview-section-label">RECENT</div>
+                        <div class="color-row">
+                            <span class="swatch" style="background:#FAFAF8"></span>
+                            <span class="color-value">hsl(60, 17%, 98%)</span>
+                        </div>
+                        <div class="color-row">
+                            <span class="swatch" style="background:#5A5A72"></span>
+                            <span class="color-value">Color(red: 0.35, green: 0.35, blue: 0.45)</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -878,7 +1118,10 @@
                     <p><span class="brand-name">teenycolor</span> uses macOS native NSColorSampler to give you a pixel-perfect magnifying loupe. Click anywhere on any screen to grab the exact color under your cursor. The value is copied to your clipboard instantly and a floating HUD confirms the copy.</p>
                 </div>
                 <div class="showcase-image">
-                    <img src="images/screenshot-picker.webp" alt="teenycolor native color picker loupe sampling a color from the screen">
+                    <div class="picker-preview" role="img" aria-label="teenycolor native color picker loupe sampling a color from the screen">
+                        <div class="loupe"></div>
+                        <div class="loupe-label">Copied #FF6B35</div>
+                    </div>
                 </div>
             </div>
 
@@ -888,7 +1131,33 @@
                     <p><span class="brand-name">teenycolor</span> saves your picked colors automatically. Each entry shows a color swatch, the formatted value, and a relative timestamp. History persists between launches and the limit is configurable (20, 50, or 100). Pin your favorites so they stay at the top forever.</p>
                 </div>
                 <div class="showcase-image">
-                    <img src="images/screenshot-history.webp" alt="teenycolor color history list showing recent picks with swatches and hex values">
+                    <div class="app-preview" role="img" aria-label="teenycolor color history list showing recent picks with swatches and hex values">
+                        <div class="preview-toolbar">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3.5l6 6-7.5 7.5H9v-4L16.5 5.5z"/><path d="M7 17l-3 3"/><path d="M12 8l4 4"/></svg>
+                            <strong>recent colors</strong>
+                            <span class="preview-count">50 max</span>
+                        </div>
+                        <div class="preview-body">
+                            <div class="color-row">
+                                <span class="swatch" style="background:#FF6B35"></span>
+                                <span><span class="color-name">Today</span><span class="color-value">#FF6B35</span></span>
+                                <span class="pin">pin</span>
+                            </div>
+                            <div class="color-row">
+                                <span class="swatch" style="background:#34C759"></span>
+                                <span><span class="color-name">Pinned</span><span class="color-value">rgb(52, 199, 89)</span></span>
+                                <span class="pin">pin</span>
+                            </div>
+                            <div class="color-row">
+                                <span class="swatch" style="background:#0D1117"></span>
+                                <span class="color-value">#0D1117</span>
+                            </div>
+                            <div class="color-row">
+                                <span class="swatch" style="background:#F5F5F3"></span>
+                                <span class="color-value">rgba(245, 245, 243, 1.0)</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -898,7 +1167,19 @@
                     <p>For every color you pick, <span class="brand-name">teenycolor</span> calculates the WCAG 2.1 contrast ratio against both white and black backgrounds. Color-coded badges show AAA, AA, AA Large, or Fail instantly. No need to open a separate accessibility tool.</p>
                 </div>
                 <div class="showcase-image">
-                    <img src="images/screenshot-contrast.webp" alt="teenycolor WCAG contrast ratio checker showing pass and fail results for two colors">
+                    <div class="contrast-preview" role="img" aria-label="teenycolor WCAG contrast ratio checker showing pass and fail results for a sampled color">
+                        <div class="contrast-swatch"></div>
+                        <div class="contrast-row">
+                            <span>vs White</span>
+                            <span class="contrast-ratio">2.8:1</span>
+                            <span class="contrast-level warn">Fail</span>
+                        </div>
+                        <div class="contrast-row">
+                            <span>vs Black</span>
+                            <span class="contrast-ratio">7.5:1</span>
+                            <span class="contrast-level">AAA</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -924,7 +1205,29 @@
                     <div class="mac-dot green"></div>
                 </div>
                 <div class="mac-window-body">
-                    <img src="images/screenshot-app.webp" alt="teenycolor full popover with color history, pinned colors, and format selector">
+                    <div class="app-preview" role="img" aria-label="teenycolor full popover with color history, pinned colors, and format selector">
+                        <div class="preview-toolbar">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3.5l6 6-7.5 7.5H9v-4L16.5 5.5z"/><path d="M7 17l-3 3"/><path d="M12 8l4 4"/></svg>
+                            <strong>teenycolor</strong>
+                            <span class="preview-count">8</span>
+                        </div>
+                        <div class="preview-body">
+                            <div class="pick-button">Pick Color</div>
+                            <div class="color-row">
+                                <span class="swatch" style="background:#FF6B35"></span>
+                                <span class="color-value">#FF6B35</span>
+                                <span class="pin">pin</span>
+                            </div>
+                            <div class="color-row">
+                                <span class="swatch" style="background:#1A1A2E"></span>
+                                <span class="color-value">rgb(26, 26, 46)</span>
+                            </div>
+                            <div class="color-row">
+                                <span class="swatch" style="background:#FAFAF8"></span>
+                                <span class="color-value">hsl(60, 17%, 98%)</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1011,7 +1314,7 @@
                 <div class="feature-card">
                     <span class="feature-icon">&#x1F34E;</span>
                     <h3>100% Native Mac</h3>
-                    <p>Built with Swift and SwiftUI. Zero third-party dependencies. No Electron, no web views. App Sandbox enabled.</p>
+                    <p>Built with Swift and SwiftUI. Native Mac app, no Electron, no web views. Hardened runtime enabled for Developer ID distribution.</p>
                 </div>
             </div>
         </div>
