@@ -196,18 +196,193 @@
         }
 
         .hero h1 {
-            font-family: var(--font-display);
-            font-size: clamp(42px, 6vw, 64px);
-            line-height: 1.1;
-            margin-bottom: 16px;
+            font-family: 'Fraunces', serif;
+            font-size: clamp(48px, 7.5vw, 84px);
+            line-height: 0.98;
+            margin-bottom: 28px;
             font-weight: 700;
-            letter-spacing: -1px;
+            letter-spacing: -1.6px;
             color: var(--text-primary);
         }
 
-        .hero h1 em {
+        .hero h1 .underline-word {
             font-style: italic;
-            color: var(--orange);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero h1 .underline-word svg {
+            position: absolute;
+            bottom: -10px;
+            left: -3%;
+            width: 106%;
+            height: 20px;
+            stroke: var(--text-primary);
+            stroke-width: 3.5;
+            fill: none;
+            stroke-linecap: round;
+            pointer-events: none;
+        }
+
+        /* ========== STAGES ========== */
+        .hero-stage {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 56px 40px 48px;
+            background:
+                radial-gradient(ellipse 60% 50% at 50% 20%, rgba(255, 107, 53, 0.08), transparent 70%),
+                linear-gradient(180deg, #f5f5f3, #ebebe6);
+            border-radius: var(--radius-xl);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            justify-content: center;
+        }
+
+        .showcase-stage {
+            padding: 36px 20px;
+            background:
+                radial-gradient(ellipse 60% 50% at 50% 20%, rgba(255, 107, 53, 0.06), transparent 70%),
+                linear-gradient(180deg, #f5f5f3, #ebebe6);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+        }
+
+        /* ========== TEENYCOLOR POPOVER (ColorListView + ColorRowView) ========== */
+        .tc {
+            width: 320px;
+            background: rgba(30, 30, 34, 0.92);
+            backdrop-filter: blur(32px) saturate(180%);
+            -webkit-backdrop-filter: blur(32px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 24px 72px rgba(0, 0, 0, 0.3), 0 0 0 0.5px rgba(255, 255, 255, 0.04);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            color: rgba(235, 235, 245, 0.92);
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+            font-size: 13px;
+            line-height: 1.3;
+            text-align: left;
+        }
+
+        .tc-divider { height: 0.5px; background: rgba(255, 255, 255, 0.1); }
+
+        .tc-header { display: flex; align-items: center; gap: 8px; padding: 10px 14px; }
+        .tc-brand-icon { width: 14px; height: 13px; color: #FF9500; flex-shrink: 0; }
+        .tc-brand-name { font-size: 13px; font-weight: 700; color: rgba(235, 235, 245, 0.95); letter-spacing: -0.15px; }
+        .tc-spacer { flex: 1; }
+
+        .tc-count {
+            font-size: 10px;
+            font-weight: 500;
+            color: rgba(235, 235, 245, 0.6);
+            background: rgba(235, 235, 245, 0.1);
+            padding: 3px 7px;
+            border-radius: 100px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .tc-pick {
+            margin: 0 10px 8px;
+            padding: 10px;
+            background: #FF9500;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .tc-pick svg { width: 14px; height: 14px; }
+
+        .tc-section {
+            font-size: 10px;
+            font-weight: 600;
+            color: rgba(235, 235, 245, 0.35);
+            letter-spacing: 0.6px;
+            padding: 8px 16px 4px;
+        }
+
+        .tc-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 12px;
+            margin: 0 4px;
+            border-radius: 8px;
+        }
+
+        .tc-row.hover { background: rgba(255, 255, 255, 0.06); }
+
+        .tc-swatch {
+            width: 24px; height: 24px;
+            border-radius: 6px;
+            box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.2);
+            flex-shrink: 0;
+        }
+
+        .tc-row-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .tc-row-name {
+            font-size: 11px;
+            font-weight: 500;
+            color: rgba(235, 235, 245, 0.92);
+            letter-spacing: -0.1px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .tc-row-hex {
+            font-size: 13px;
+            font-family: 'SF Mono', ui-monospace, 'Menlo', monospace;
+            color: rgba(235, 235, 245, 0.92);
+            letter-spacing: 0.3px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .tc-pin {
+            width: 9px; height: 9px;
+            color: rgba(235, 235, 245, 0.55);
+            flex-shrink: 0;
+        }
+
+        .tc-list { padding: 4px 0; }
+
+        .tc-footer {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 14px;
+        }
+
+        .tc-footer .spacer { flex: 1; }
+        .tc-footer svg { color: rgba(235, 235, 245, 0.55); }
+        .tc-footer .gear, .tc-footer .share { width: 13px; height: 13px; }
+        .tc-footer .power { width: 12px; height: 12px; }
+
+        .mac-window-body.tc-dark {
+            background: #1a1a1e;
+            padding: 40px 30px;
+            display: flex;
+            justify-content: center;
         }
 
         .hero-sub {
@@ -486,7 +661,7 @@
         .picker-preview {
             position: relative;
             background:
-                linear-gradient(135deg, #FF6B35 0 24%, #1A1A2E 24% 46%, #FFFFFF 46% 64%, #5A5A72 64% 100%);
+                linear-gradient(180deg, #FF6B35 0 48%, #1A1A2E 48% 68%, #FFFFFF 68% 84%, #5A5A72 84% 100%);
         }
 
         .loupe {
@@ -494,12 +669,13 @@
             width: 126px;
             height: 126px;
             border-radius: 50%;
-            left: 50%;
-            top: 50%;
+            left: 32%;
+            top: 22%;
             transform: translate(-50%, -50%);
-            background: radial-gradient(circle at 35% 35%, #FF8C61, #FF6B35 54%, #1A1A2E 55%);
+            background:
+                radial-gradient(circle at 35% 35%, #FFB08A 0%, #FF7C3C 38%, #FF6B35 72%, #E85A24 100%);
             border: 5px solid white;
-            box-shadow: 0 16px 36px rgba(0,0,0,0.22);
+            box-shadow: 0 16px 36px rgba(0,0,0,0.22), inset 0 0 0 1px rgba(255,255,255,0.1);
         }
 
         .loupe::before,
@@ -521,6 +697,20 @@
             left: 8px;
             height: 1px;
             width: 110px;
+        }
+
+        /* Center pixel marker — shows the exact pixel being picked */
+        .loupe-center {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 14px;
+            height: 14px;
+            transform: translate(-50%, -50%);
+            border: 1.5px solid rgba(255, 255, 255, 0.95);
+            border-radius: 2px;
+            background: transparent;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.3);
         }
 
         .loupe-label {
@@ -990,44 +1180,84 @@
     <!-- HERO -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Pick Any Color <em>From Your Mac</em></h1>
-            <p class="hero-sub">One click to grab. Instantly copied. Always remembered.</p>
+            <h1>Any color on your screen, <span class="underline-word">captured.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true"><path d="M3,14 Q40,6 80,11 T160,9 Q180,8 197,11"/></svg></span></h1>
+            <p class="hero-sub">A screen color picker for Mac.</p>
             <p class="hero-body">
-                <span class="brand-name">teenycolor</span> lives in your menu bar and lets you pick any color from anywhere on screen. It auto-copies the value in your preferred format  - Hex, RGB, HSL, SwiftUI, and more  - and keeps a history of every color you pick. 3-day free trial, then $4.99 once.
+                <span class="brand-name">teenycolor</span> lives in your menu bar. Click to grab any pixel, get the value auto-copied in your preferred format (Hex, RGB, HSL, SwiftUI, and more), and keep a searchable history. 3-day free trial, then $4.99 once.
             </p>
             <div class="hero-buttons">
                 <a href="downloads/TeenyColor.dmg" download class="btn btn-outline btn-large">Download App</a>
                 <a href="https://buy.polar.sh/polar_cl_6o4mhi1rJ9arjSrFdRQvzKuHtyn9ieF1sVOUw2bzTip" class="btn btn-primary btn-large">Purchase License: $4.99</a>
             </div>
-            <div class="hero-media fade-up">
-                <div class="app-preview" role="img" aria-label="teenycolor popover showing color history with picked colors, hex values, and pinned palettes">
-                    <div class="preview-toolbar">
-                        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3.5l6 6-7.5 7.5H9v-4L16.5 5.5z"/><path d="M7 17l-3 3"/><path d="M12 8l4 4"/></svg>
-                        <strong>teenycolor</strong>
-                        <span class="preview-count">12</span>
+            <div class="hero-stage fade-up" aria-hidden="true">
+                <div class="tc">
+                    <div class="tc-header">
+                        <svg class="tc-brand-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 2.5l2.5 2.5L7 11.5 l-3 0.8 0.8-3 Z"/>
+                            <path d="M9.5 4l2.5 2.5" stroke-width="1.2"/>
+                        </svg>
+                        <span class="tc-brand-name">teenycolor</span>
+                        <span class="tc-spacer"></span>
+                        <span class="tc-count">8</span>
                     </div>
-                    <div class="preview-body">
-                        <div class="pick-button">Pick Color</div>
-                        <div class="preview-section-label">PINNED</div>
-                        <div class="color-row">
-                            <span class="swatch" style="background:#FF6B35"></span>
-                            <span><span class="color-name">Brand orange</span><span class="color-value">#FF6B35</span></span>
-                            <span class="pin">pin</span>
+                    <div class="tc-pick">
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 2.5l2.5 2.5L7 11.5 l-3 0.8 0.8-3 Z"/>
+                            <path d="M9.5 4l2.5 2.5"/>
+                        </svg>
+                        Pick Color
+                    </div>
+                    <div class="tc-divider"></div>
+                    <div class="tc-list">
+                        <div class="tc-section">PINNED</div>
+                        <div class="tc-row">
+                            <span class="tc-swatch" style="background: #FF6B35"></span>
+                            <div class="tc-row-info">
+                                <span class="tc-row-name">Brand orange</span>
+                                <span class="tc-row-hex">#FF6B35</span>
+                            </div>
+                            <svg class="tc-pin" viewBox="0 0 16 16" fill="currentColor"><path d="M9.5 1.5H6.5a.5.5 0 0 0-.5.5v3.5L4 7v1h3.5v5.5a.5.5 0 0 0 1 0V8H12V7l-2-1.5V2a.5.5 0 0 0-.5-.5z"/></svg>
                         </div>
-                        <div class="color-row">
-                            <span class="swatch" style="background:#1A1A2E"></span>
-                            <span><span class="color-name">Ink</span><span class="color-value">rgb(26, 26, 46)</span></span>
-                            <span class="pin">pin</span>
+                        <div class="tc-row hover">
+                            <span class="tc-swatch" style="background: #0D0A10"></span>
+                            <div class="tc-row-info">
+                                <span class="tc-row-name">Deep ink</span>
+                                <span class="tc-row-hex">#0D0A10</span>
+                            </div>
+                            <svg class="tc-pin" viewBox="0 0 16 16" fill="currentColor"><path d="M9.5 1.5H6.5a.5.5 0 0 0-.5.5v3.5L4 7v1h3.5v5.5a.5.5 0 0 0 1 0V8H12V7l-2-1.5V2a.5.5 0 0 0-.5-.5z"/></svg>
                         </div>
-                        <div class="preview-section-label">RECENT</div>
-                        <div class="color-row">
-                            <span class="swatch" style="background:#FAFAF8"></span>
-                            <span class="color-value">hsl(60, 17%, 98%)</span>
+                        <div class="tc-section">RECENT</div>
+                        <div class="tc-row">
+                            <span class="tc-swatch" style="background: #4ECDC4"></span>
+                            <div class="tc-row-info"><span class="tc-row-hex">#4ECDC4</span></div>
                         </div>
-                        <div class="color-row">
-                            <span class="swatch" style="background:#5A5A72"></span>
-                            <span class="color-value">Color(red: 0.35, green: 0.35, blue: 0.45)</span>
+                        <div class="tc-row">
+                            <span class="tc-swatch" style="background: #057CFD"></span>
+                            <div class="tc-row-info"><span class="tc-row-hex">#057CFD</span></div>
                         </div>
+                        <div class="tc-row">
+                            <span class="tc-swatch" style="background: #FE8153"></span>
+                            <div class="tc-row-info"><span class="tc-row-hex">#FE8153</span></div>
+                        </div>
+                        <div class="tc-row">
+                            <span class="tc-swatch" style="background: #9B6DFF"></span>
+                            <div class="tc-row-info"><span class="tc-row-hex">#9B6DFF</span></div>
+                        </div>
+                        <div class="tc-row">
+                            <span class="tc-swatch" style="background: #FFD60A"></span>
+                            <div class="tc-row-info"><span class="tc-row-hex">#FFD60A</span></div>
+                        </div>
+                        <div class="tc-row">
+                            <span class="tc-swatch" style="background: #052A40"></span>
+                            <div class="tc-row-info"><span class="tc-row-hex">#052A40</span></div>
+                        </div>
+                    </div>
+                    <div class="tc-divider"></div>
+                    <div class="tc-footer">
+                        <svg class="gear" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2.2"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.5 3.5l1.5 1.5M11 11l1.5 1.5M3.5 12.5l1.5-1.5M11 5l1.5-1.5"/></svg>
+                        <svg class="share" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2 v9 M5 5 L8 2 L11 5"/><path d="M3 9 v4 a1 1 0 0 0 1 1 h8 a1 1 0 0 0 1-1 v-4"/></svg>
+                        <span class="spacer"></span>
+                        <svg class="power" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M11.5 4a5.5 5.5 0 1 1-7 0"/><path d="M8 1.5v6"/></svg>
                     </div>
                 </div>
             </div>
@@ -1119,7 +1349,9 @@
                 </div>
                 <div class="showcase-image">
                     <div class="picker-preview" role="img" aria-label="teenycolor native color picker loupe sampling a color from the screen">
-                        <div class="loupe"></div>
+                        <div class="loupe">
+                            <div class="loupe-center"></div>
+                        </div>
                         <div class="loupe-label">Copied #FF6B35</div>
                     </div>
                 </div>
@@ -1204,28 +1436,75 @@
                     <div class="mac-dot yellow"></div>
                     <div class="mac-dot green"></div>
                 </div>
-                <div class="mac-window-body">
-                    <div class="app-preview" role="img" aria-label="teenycolor full popover with color history, pinned colors, and format selector">
-                        <div class="preview-toolbar">
-                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 3.5l6 6-7.5 7.5H9v-4L16.5 5.5z"/><path d="M7 17l-3 3"/><path d="M12 8l4 4"/></svg>
-                            <strong>teenycolor</strong>
-                            <span class="preview-count">8</span>
+                <div class="mac-window-body tc-dark">
+                    <div class="tc">
+                        <div class="tc-header">
+                            <svg class="tc-brand-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 2.5l2.5 2.5L7 11.5 l-3 0.8 0.8-3 Z"/>
+                                <path d="M9.5 4l2.5 2.5" stroke-width="1.2"/>
+                            </svg>
+                            <span class="tc-brand-name">teenycolor</span>
+                            <span class="tc-spacer"></span>
+                            <span class="tc-count">8</span>
                         </div>
-                        <div class="preview-body">
-                            <div class="pick-button">Pick Color</div>
-                            <div class="color-row">
-                                <span class="swatch" style="background:#FF6B35"></span>
-                                <span class="color-value">#FF6B35</span>
-                                <span class="pin">pin</span>
+                        <div class="tc-pick">
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M11 2.5l2.5 2.5L7 11.5 l-3 0.8 0.8-3 Z"/>
+                                <path d="M9.5 4l2.5 2.5"/>
+                            </svg>
+                            Pick Color
+                        </div>
+                        <div class="tc-divider"></div>
+                        <div class="tc-list">
+                            <div class="tc-section">PINNED</div>
+                            <div class="tc-row">
+                                <span class="tc-swatch" style="background: #FF6B35"></span>
+                                <div class="tc-row-info">
+                                    <span class="tc-row-name">Brand orange</span>
+                                    <span class="tc-row-hex">#FF6B35</span>
+                                </div>
+                                <svg class="tc-pin" viewBox="0 0 16 16" fill="currentColor"><path d="M9.5 1.5H6.5a.5.5 0 0 0-.5.5v3.5L4 7v1h3.5v5.5a.5.5 0 0 0 1 0V8H12V7l-2-1.5V2a.5.5 0 0 0-.5-.5z"/></svg>
                             </div>
-                            <div class="color-row">
-                                <span class="swatch" style="background:#1A1A2E"></span>
-                                <span class="color-value">rgb(26, 26, 46)</span>
+                            <div class="tc-row">
+                                <span class="tc-swatch" style="background: #0D0A10"></span>
+                                <div class="tc-row-info">
+                                    <span class="tc-row-name">Deep ink</span>
+                                    <span class="tc-row-hex">#0D0A10</span>
+                                </div>
+                                <svg class="tc-pin" viewBox="0 0 16 16" fill="currentColor"><path d="M9.5 1.5H6.5a.5.5 0 0 0-.5.5v3.5L4 7v1h3.5v5.5a.5.5 0 0 0 1 0V8H12V7l-2-1.5V2a.5.5 0 0 0-.5-.5z"/></svg>
                             </div>
-                            <div class="color-row">
-                                <span class="swatch" style="background:#FAFAF8"></span>
-                                <span class="color-value">hsl(60, 17%, 98%)</span>
+                            <div class="tc-section">RECENT</div>
+                            <div class="tc-row">
+                                <span class="tc-swatch" style="background: #4ECDC4"></span>
+                                <div class="tc-row-info"><span class="tc-row-hex">#4ECDC4</span></div>
                             </div>
+                            <div class="tc-row">
+                                <span class="tc-swatch" style="background: #057CFD"></span>
+                                <div class="tc-row-info"><span class="tc-row-hex">#057CFD</span></div>
+                            </div>
+                            <div class="tc-row">
+                                <span class="tc-swatch" style="background: #FE8153"></span>
+                                <div class="tc-row-info"><span class="tc-row-hex">#FE8153</span></div>
+                            </div>
+                            <div class="tc-row">
+                                <span class="tc-swatch" style="background: #9B6DFF"></span>
+                                <div class="tc-row-info"><span class="tc-row-hex">#9B6DFF</span></div>
+                            </div>
+                            <div class="tc-row">
+                                <span class="tc-swatch" style="background: #FFD60A"></span>
+                                <div class="tc-row-info"><span class="tc-row-hex">#FFD60A</span></div>
+                            </div>
+                            <div class="tc-row">
+                                <span class="tc-swatch" style="background: #052A40"></span>
+                                <div class="tc-row-info"><span class="tc-row-hex">#052A40</span></div>
+                            </div>
+                        </div>
+                        <div class="tc-divider"></div>
+                        <div class="tc-footer">
+                            <svg class="gear" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="2.2"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.5 3.5l1.5 1.5M11 11l1.5 1.5M3.5 12.5l1.5-1.5M11 5l1.5-1.5"/></svg>
+                            <svg class="share" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2 v9 M5 5 L8 2 L11 5"/><path d="M3 9 v4 a1 1 0 0 0 1 1 h8 a1 1 0 0 0 1-1 v-4"/></svg>
+                            <span class="spacer"></span>
+                            <svg class="power" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"><path d="M11.5 4a5.5 5.5 0 1 1-7 0"/><path d="M8 1.5v6"/></svg>
                         </div>
                     </div>
                 </div>
